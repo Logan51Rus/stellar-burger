@@ -1,4 +1,5 @@
 import { useSelector } from '../../services/store';
+import { selectorIngredientsStatus } from '../../services/ingredientsSlice';
 
 import styles from './constructor-page.module.css';
 
@@ -6,10 +7,12 @@ import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
 import { FC } from 'react';
+import { RequestStatus } from '@utils-types';
 
 export const ConstructorPage: FC = () => {
   /** TODO: взять переменную из стора */
-  const isIngredientsLoading = false;
+  const ingredientsStatus = useSelector(selectorIngredientsStatus);
+  const isIngredientsLoading = ingredientsStatus === RequestStatus.Loading;
 
   return (
     <>
