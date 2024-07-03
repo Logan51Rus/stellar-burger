@@ -54,10 +54,13 @@ export const feedSlice = createSlice({
       .addCase(getOrderByNumber.rejected, (state) => {
         state.status = RequestStatus.Failed;
       })
-      .addCase(getOrderByNumber.fulfilled, (state, action: PayloadAction<TOrder[]>) => {
-        state.orderModalInfo = action.payload[0];
-        state.status = RequestStatus.Success;
-      });
+      .addCase(
+        getOrderByNumber.fulfilled,
+        (state, action: PayloadAction<TOrder[]>) => {
+          state.orderModalInfo = action.payload[0];
+          state.status = RequestStatus.Success;
+        }
+      );
   },
   selectors: {
     selectorOrderPreview: (state: TFeedState) => state.orders,

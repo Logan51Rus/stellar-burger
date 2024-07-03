@@ -5,11 +5,11 @@ import {
   TLoginData,
   TRegisterData,
   updateUserApi,
-  resetPasswordApi,
-  logoutApi
+  logoutApi,
+  getUserApi
 } from '@api';
 import { RequestStatus, TUser } from '@utils-types';
-import { deleteCookie, setCookie } from '../utils/cookie';
+import { deleteCookie, setCookie, getCookie } from '../utils/cookie';
 
 export const loginUser = createAsyncThunk(
   'auth/login',
@@ -43,9 +43,28 @@ export const logoutUser = createAsyncThunk('user/logout', async () => {
   const res = await logoutApi();
   if (res.success) {
     deleteCookie('accessToken');
-    localStorage.removeItem('refreshToken')
+    localStorage.removeItem('refreshToken');
   }
 });
+
+export const getUser = createAsyncThunk(
+  'auth/getUser',
+  async (_, { dispatch }) => {
+    if (getCookie('accessToken')) {
+      await getUserApi()
+        .then((res) => {
+          dispatch(setUser(res.user));
+        })
+        .catch(() => {
+          deleteCookie('accessCookie');
+          localStorage.removeItem('refreshToken');
+        })
+        .finally(() => dispatch(setIsAuthChecked(true)));
+    } else {
+      dispatch(setIsAuthChecked(true));
+    }
+  }
+);
 
 type TAuthState = {
   isAuthorized: boolean;
@@ -62,7 +81,14 @@ const initialState: TAuthState = {
 export const authSlice = createSlice({
   name: 'authorization',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsAuthChecked: (state, action: PayloadAction<boolean>) => {
+      state.isAuthorized = action.payload;
+    },
+    setUser: (state, action: PayloadAction<TUser>) => {
+      state.user = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
@@ -115,5 +141,6 @@ export const authSlice = createSlice({
   }
 });
 
+export const { setIsAuthChecked, setUser } = authSlice.actions;
 export const { selectorUserData, selectorisUserAuthorized } =
   authSlice.selectors;

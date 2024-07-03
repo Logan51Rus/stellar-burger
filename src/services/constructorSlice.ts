@@ -6,7 +6,7 @@ type TCounstructorState = {
   constructorItems: {
     bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
-  }
+  };
   order: TOrder | null;
   requestStatus: RequestStatus;
 };
@@ -14,7 +14,7 @@ type TCounstructorState = {
 const initialState: TCounstructorState = {
   constructorItems: {
     bun: null,
-    ingredients: [],
+    ingredients: []
   },
   order: null,
   requestStatus: RequestStatus.Idle
@@ -46,7 +46,8 @@ export const constructorSlice = createSlice({
       const ingredientIndex = state.constructorItems.ingredients.findIndex(
         (ingredient) => ingredient.id === action.payload.id
       );
-      const previousElem = state.constructorItems.ingredients[ingredientIndex - 1];
+      const previousElem =
+        state.constructorItems.ingredients[ingredientIndex - 1];
       state.constructorItems.ingredients.splice(
         ingredientIndex - 1,
         2,
@@ -59,7 +60,12 @@ export const constructorSlice = createSlice({
         (ingredient) => ingredient.id === action.payload.id
       );
       const nextElem = state.constructorItems.ingredients[ingredientIndex + 1];
-      state.constructorItems.ingredients.splice(ingredientIndex, 2, nextElem, action.payload);
+      state.constructorItems.ingredients.splice(
+        ingredientIndex,
+        2,
+        nextElem,
+        action.payload
+      );
     },
     removeIngredient: (state, { payload }: PayloadAction<number>) => {
       state.constructorItems.ingredients.splice(payload, 1);
@@ -79,18 +85,19 @@ export const constructorSlice = createSlice({
       .addCase(orderBurger.fulfilled, (state, action) => {
         state.requestStatus = RequestStatus.Success;
         state.constructorItems.bun = initialState.constructorItems.bun;
-        state.constructorItems.ingredients = initialState.constructorItems.ingredients;
+        state.constructorItems.ingredients =
+          initialState.constructorItems.ingredients;
         state.order = action.payload;
       });
   },
   selectors: {
     selectorOrderStatus: (state: TCounstructorState) => state.requestStatus,
     selectorOrderModalData: (state: TCounstructorState) => state.order,
-    selectorOrder: (state: TCounstructorState) => state.constructorItems,
+    selectorOrder: (state: TCounstructorState) => state.constructorItems
   }
 });
 
-export const { selectorOrderStatus, selectorOrderModalData, selectorOrder} =
+export const { selectorOrderStatus, selectorOrderModalData, selectorOrder } =
   constructorSlice.selectors;
 export const {
   addIngredient,
