@@ -1,13 +1,13 @@
-import { getIngredientsApi } from '@api';
+import { getIngredientsApi } from '../utils/burger-api';
 import { TIngredient, RequestStatus } from '../utils/types';
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
 type TIngredientState = {
   data: TIngredient[];
   status: RequestStatus;
 };
 
-const initialState: TIngredientState = {
+export const initialState: TIngredientState = {
   data: [],
   status: RequestStatus.Idle
 };
@@ -17,7 +17,7 @@ export const getIngredients = createAsyncThunk<TIngredient[]>(
   getIngredientsApi
 );
 
-export const ingredientSlice = createSlice({
+export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
   reducers: {},
@@ -29,10 +29,13 @@ export const ingredientSlice = createSlice({
       .addCase(getIngredients.rejected, (state) => {
         state.status = RequestStatus.Failed;
       })
-      .addCase(getIngredients.fulfilled, (state, action) => {
-        state.status = RequestStatus.Success;
-        state.data = action.payload;
-      });
+      .addCase(
+        getIngredients.fulfilled,
+        (state, action: PayloadAction<TIngredient[]>) => {
+          state.status = RequestStatus.Success;
+          state.data = action.payload;
+        }
+      );
   },
   selectors: {
     selectorIngredients: (state: TIngredientState) => state.data,
@@ -41,4 +44,5 @@ export const ingredientSlice = createSlice({
 });
 
 export const { selectorIngredients, selectorIngredientsStatus } =
-  ingredientSlice.selectors;
+  ingredientsSlice.selectors;
+export default ingredientsSlice.reducer;

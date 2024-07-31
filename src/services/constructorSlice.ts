@@ -1,23 +1,23 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RequestStatus, TConstructorIngredient, TOrder } from '@utils-types';
-import { orderBurgerApi } from '@api';
+import { RequestStatus, TConstructorIngredient, TOrder } from '../utils/types';
+import { orderBurgerApi } from '../utils/burger-api';
 
-type TCounstructorState = {
+export type TCounstructorState = {
   constructorItems: {
     bun: TConstructorIngredient | null;
     ingredients: TConstructorIngredient[];
   };
   order: TOrder | null;
-  requestStatus: RequestStatus;
+  status: RequestStatus;
 };
 
-const initialState: TCounstructorState = {
+export const initialState: TCounstructorState = {
   constructorItems: {
     bun: null,
     ingredients: []
   },
   order: null,
-  requestStatus: RequestStatus.Idle
+  status: RequestStatus.Idle
 };
 
 export const orderBurger = createAsyncThunk(
@@ -77,13 +77,13 @@ export const constructorSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(orderBurger.pending, (state) => {
-        state.requestStatus = RequestStatus.Loading;
+        state.status = RequestStatus.Loading;
       })
       .addCase(orderBurger.rejected, (state) => {
-        state.requestStatus = RequestStatus.Failed;
+        state.status = RequestStatus.Failed;
       })
       .addCase(orderBurger.fulfilled, (state, action) => {
-        state.requestStatus = RequestStatus.Success;
+        state.status = RequestStatus.Success;
         state.constructorItems.bun = initialState.constructorItems.bun;
         state.constructorItems.ingredients =
           initialState.constructorItems.ingredients;
@@ -91,7 +91,7 @@ export const constructorSlice = createSlice({
       });
   },
   selectors: {
-    selectorOrderStatus: (state: TCounstructorState) => state.requestStatus,
+    selectorOrderStatus: (state: TCounstructorState) => state.status,
     selectorOrderModalData: (state: TCounstructorState) => state.order,
     selectorOrder: (state: TCounstructorState) => state.constructorItems
   }
@@ -106,3 +106,4 @@ export const {
   moveIngredientDown,
   resetOrder
 } = constructorSlice.actions;
+export default constructorSlice.reducer;

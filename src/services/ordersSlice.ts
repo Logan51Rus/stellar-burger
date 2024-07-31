@@ -1,13 +1,13 @@
 import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getOrdersApi } from '@api';
-import { RequestStatus, TOrder } from '@utils-types';
+import { getOrdersApi } from '../utils/burger-api';
+import { RequestStatus, TOrder } from '../utils/types';
 
 type TOrdersState = {
   orders: TOrder[];
   status: RequestStatus;
 };
 
-const initialState: TOrdersState = {
+export const initialState: TOrdersState = {
   orders: [],
   status: RequestStatus.Idle
 };
@@ -43,3 +43,4 @@ export const ordersSlice = createSlice({
 });
 
 export const { selectorOrders } = ordersSlice.selectors;
+export default ordersSlice.reducer;

@@ -7,8 +7,8 @@ import {
   updateUserApi,
   logoutApi,
   getUserApi
-} from '@api';
-import { RequestStatus, TUser } from '@utils-types';
+} from '../utils/burger-api';
+import { RequestStatus, TUser } from '../utils/types';
 import { deleteCookie, setCookie, getCookie } from '../utils/cookie';
 
 export const loginUser = createAsyncThunk(
@@ -66,13 +66,13 @@ export const getUser = createAsyncThunk(
   }
 );
 
-type TAuthState = {
+export type TAuthState = {
   isAuthorized: boolean;
   user: TUser | null;
   status: RequestStatus;
 };
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   isAuthorized: false,
   user: null,
   status: RequestStatus.Idle
@@ -144,3 +144,4 @@ export const authSlice = createSlice({
 export const { setIsAuthChecked, setUser } = authSlice.actions;
 export const { selectorUserData, selectorisUserAuthorized } =
   authSlice.selectors;
+export default authSlice.reducer;

@@ -1,12 +1,12 @@
-import { TOrdersData, RequestStatus, TOrder } from '@utils-types';
-import { getFeedsApi, getOrderByNumberApi } from '@api';
+import { TOrdersData, RequestStatus, TOrder } from '../utils/types';
+import { getFeedsApi, getOrderByNumberApi } from '../utils/burger-api';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 
-type TFeedState = TOrdersData & { status: RequestStatus } & {
+export type TFeedState = TOrdersData & { status: RequestStatus } & {
   orderModalInfo: TOrder | null;
 };
 
-const initialState: TFeedState = {
+export const initialState: TFeedState = {
   orders: [],
   orderModalInfo: null,
   total: 0,
@@ -76,3 +76,4 @@ export const {
   selectorFeedTotalToday,
   selectorFeedOrderByNumber
 } = feedSlice.selectors;
+export default feedSlice.reducer;
