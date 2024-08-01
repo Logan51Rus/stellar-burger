@@ -1,4 +1,3 @@
-const testUrl = 'http://localhost:4000';
 const mockIngredientId = '643d69a5c3f7b9001cfa093c'
 const modalSelector = '[data-cy=modal]';
 const modalCloseButtonSelector = '[data-cy=modal-close-button]';
@@ -19,7 +18,7 @@ describe('тестируем функциональность страницы �
         fixture:'user.json'
       }).as('getUser')
 
-      cy.visit(testUrl);
+      cy.visit('/');
       cy.wait('@getIngredients');
     });
 
@@ -34,7 +33,7 @@ describe('тестируем функциональность страницы �
   })
 
   it('сайт должен быть доступен по адресу http://localhost:4000', () => {
-    cy.visit(testUrl);
+    cy.visit('/');
   });
 
   it('добавление булок и ингредиентов в конструктор', () => {
