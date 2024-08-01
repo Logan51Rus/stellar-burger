@@ -8,7 +8,7 @@ import {
 import { ingredientsSlice } from './ingredientsSlice';
 import { constructorSlice } from './constructorSlice';
 import { feedSlice } from './feedSlice';
-import { authSlice } from './authUserSlice';
+import { authSlice } from './authUser';
 import { ordersSlice } from './ordersSlice';
 
 export const rootReducer = combineReducers({
