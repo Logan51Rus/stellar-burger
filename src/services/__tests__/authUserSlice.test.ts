@@ -7,7 +7,7 @@ import authReducer, {
   updateUserData,
   logoutUser,
   TAuthState
-} from '../authUser';
+} from '../authUserSlice';
 import { RequestStatus, TUser } from '../../utils/types';
 
 afterAll(() => {

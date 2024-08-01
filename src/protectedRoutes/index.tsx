@@ -2,7 +2,7 @@ import { Preloader } from '@ui';
 import {
   selectorUserData,
   selectorisUserAuthorized
-} from '../services/authUser';
+} from '../services/authUserSlice';
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 

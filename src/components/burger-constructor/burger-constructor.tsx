@@ -10,7 +10,7 @@ import {
   orderBurger,
   resetOrder
 } from '../../services/constructorSlice';
-import { selectorisUserAuthorized } from '../../services/authUser';
+import { selectorisUserAuthorized } from '../../services/authUserSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
