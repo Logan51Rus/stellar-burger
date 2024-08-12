@@ -52,11 +52,9 @@ export const getUser = createAsyncThunk(
   async (_, { dispatch }) => {
     if (getCookie('accessToken')) {
       await getUserApi()
-        .then((res) => {
-          dispatch(setUser(res.user));
-        })
+        .then((res) => dispatch(setUser(res.user)))
         .catch(() => {
-          deleteCookie('accessCookie');
+          deleteCookie('accessToken');
           localStorage.removeItem('refreshToken');
         })
         .finally(() => dispatch(setIsAuthChecked(true)));

@@ -10,7 +10,7 @@ import {
   orderBurger,
   resetOrder
 } from '../../services/constructorSlice';
-import { selectorisUserAuthorized } from '../../services/authUserSlice';
+import { selectorUserData } from '../../services/authUserSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
@@ -18,7 +18,7 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isUserLoggedIn = useSelector(selectorisUserAuthorized);
+  const isUserLoggedIn = useSelector(selectorUserData);
   const constructorItems = useSelector(selectorOrder);
   const orderRequest =
     useSelector(selectorOrderStatus) === RequestStatus.Loading;
